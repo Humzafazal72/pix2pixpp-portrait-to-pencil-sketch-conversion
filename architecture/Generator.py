@@ -78,7 +78,7 @@ class unetGenerator(nn.Module):
         
         return self.final_up(torch.cat([u7, d1], 1))
 
-gen = smp.UnetPlusPlus(
+unetppGenerator = smp.UnetPlusPlus(
     encoder_name="vgg16",         
     encoder_weights=None,         
     in_channels=3,                

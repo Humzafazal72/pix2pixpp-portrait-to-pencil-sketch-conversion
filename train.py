@@ -68,7 +68,7 @@ if __name__=='__main__':
                         default='data\mock dataset\portrait', type=str)
     parser.add_argument("-t", "--tgt_dir", help="provide the path to sketches",
                         default='data\mock dataset\sketches', type=str)
-    parser.add_argument("-g", "--generator", help="provide the name of the generator",
+    parser.add_argument("-g", "--gen_type", help="provide the name of the generator",
                         default='unet', type=str, choices=['unet','unet++'])
     parser.add_argument("-e", "--epochs", help="provide the number of epochs",
                         default=500, type=int)
@@ -77,7 +77,7 @@ if __name__=='__main__':
     EPOCHS = args.epochs
     src_dir = Path(args.src_dir)
     tgt_dir = Path(args.tgt_dir)
-    gen_type = args.generator
+    gen_type = args.gen_type
 
     if src_dir.exists() == False:
         ValueError(f"{src_dir} does not exist. Please provide valid path.")
@@ -102,4 +102,4 @@ if __name__=='__main__':
     opt_disc = torch.optim.Adam(disc.parameters(), lr=2e-4, betas=(0.5, 0.999))
     opt_gen = torch.optim.Adam(gen.parameters(), lr=100, betas=(0.5, 0.999))
 
-    #training_loop(EPOCHS = EPOCHS, DEVICE=DEVICE, L1_LAMBDA = 100, train_loader=train_loader)
+    training_loop(EPOCHS = EPOCHS, DEVICE=DEVICE, L1_LAMBDA = 100, train_loader=train_loader)
