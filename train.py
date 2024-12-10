@@ -5,7 +5,7 @@ import torch.utils
 from tqdm import tqdm
 from pathlib import Path
 from DatasetLoader import create_dataloader
-from architecture import unetGenerator,Discriminator
+from architecture import unetGenerator,Discriminator,unetppGenerator
 
 # disc.load_state_dict(checkpoint['disc_state_dict'])
 # gen.load_state_dict(checkpoint['gen_state_dict'])
@@ -68,6 +68,8 @@ if __name__=='__main__':
                         default='data\mock dataset\portrait', type=str)
     parser.add_argument("-t", "--tgt_dir", help="provide the path to sketches",
                         default='data\mock dataset\sketches', type=str)
+    parser.add_argument("-g", "--generator", help="provide the name of the generator",
+                        default='unet', type=str, choices=['unet','unet++'])
     parser.add_argument("-e", "--epochs", help="provide the number of epochs",
                         default=500, type=int)
 
@@ -75,6 +77,7 @@ if __name__=='__main__':
     EPOCHS = args.epochs
     src_dir = Path(args.src_dir)
     tgt_dir = Path(args.tgt_dir)
+    gen_type = args.generator
 
     if src_dir.exists() == False:
         ValueError(f"{src_dir} does not exist. Please provide valid path.")
@@ -90,8 +93,13 @@ if __name__=='__main__':
     L1_LOSS = nn.L1Loss()
 
     disc = Discriminator(in_=6).to(DEVICE)
-    gen = unetGenerator(in_=3, out_=64).to(DEVICE)
+    if gen_type=='unet':
+        gen = unetGenerator(in_=3, out_=64).to(DEVICE)
+    else:
+        gen = unetppGenerator.to(DEVICE)
+
+    print(gen)
     opt_disc = torch.optim.Adam(disc.parameters(), lr=2e-4, betas=(0.5, 0.999))
     opt_gen = torch.optim.Adam(gen.parameters(), lr=100, betas=(0.5, 0.999))
 
-    training_loop(EPOCHS = EPOCHS, DEVICE=DEVICE, L1_LAMBDA = 100, train_loader=train_loader)
+    #training_loop(EPOCHS = EPOCHS, DEVICE=DEVICE, L1_LAMBDA = 100, train_loader=train_loader)

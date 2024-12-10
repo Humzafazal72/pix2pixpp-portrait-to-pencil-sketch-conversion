@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import segmentation_models_pytorch as smp
 
 def generator_block(in_,out_,down=True,act='relu',dropout=False):
     layers = []
@@ -76,6 +77,14 @@ class unetGenerator(nn.Module):
         u7 = self.u7(torch.cat([u6, d2], 1))
         
         return self.final_up(torch.cat([u7, d1], 1))
+
+gen = smp.UnetPlusPlus(
+    encoder_name="vgg16",         
+    encoder_weights=None,         
+    in_channels=3,                
+    classes=3,                    
+    activation='tanh'                
+)
 
 if __name__=='__main__':
     pass
