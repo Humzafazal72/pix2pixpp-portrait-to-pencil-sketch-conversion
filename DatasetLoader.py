@@ -2,6 +2,7 @@ import os
 import torch
 import numpy as np
 from PIL import Image
+from pathlib import Path
 from torch.utils.data import DataLoader,Dataset
 
 class ImageDataset(Dataset):
@@ -36,9 +37,10 @@ class ImageDataset(Dataset):
         tgt_image = torch.tensor(tgt_image, dtype=torch.float32)
         
         return src_image, tgt_image
-    
-train_dataset = ImageDataset(src_dir='',tgt_dir='')
-test_dataset = ImageDataset(src_dir='',tgt_dir='')
 
-train_loader = DataLoader(train_dataset,batch_size=16,shuffle=True,num_workers=4) 
-test_loader = DataLoader(test_dataset,batch_size=1,shuffle=False)
+def create_dataloader(src_dir:Path, tgt_dir:Path):  
+    train_dataset = ImageDataset(src_dir=src_dir,tgt_dir=tgt_dir)
+
+    train_loader = DataLoader(train_dataset,batch_size=16,shuffle=True,num_workers=4)
+
+    return train_loader

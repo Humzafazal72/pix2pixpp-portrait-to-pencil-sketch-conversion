@@ -1,5 +1,5 @@
 import torch
-import troch.nn as nn
+import torch.nn as nn
 
 def generator_block(in_,out_,down=True,act='relu',dropout=False):
     layers = []
@@ -21,7 +21,7 @@ def generator_block(in_,out_,down=True,act='relu',dropout=False):
     layers.append(nn.Dropout(0.5))
     return nn.Sequential(*layers) 
     
-class Generator(nn.Module):
+class unetGenerator(nn.Module):
     def __init__(self,in_=3,out_=64):
         super().__init__()
         # Encoder
@@ -76,6 +76,6 @@ class Generator(nn.Module):
         u7 = self.u7(torch.cat([u6, d2], 1))
         
         return self.final_up(torch.cat([u7, d1], 1))
-    
+
 if __name__=='__main__':
     pass
