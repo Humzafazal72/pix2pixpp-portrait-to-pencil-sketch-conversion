@@ -26,4 +26,23 @@ This work was part of a research study aiming to generate pencil sketches that p
   - Training: 4,299 pairs
   - Testing: 759 pairs
 - Sketches generated using *Photo Sketch Maker* (mobile app) and manually enhanced (brightness & contrast).
-- Dataset structure:
+
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+```
+git clone https://github.com/Humzafazal72/pix2pixpp-portrait-to-pencil-sketch-conversion.git
+cd pix2pixpp-portrait-to-pencil-sketch-conversion
+```
+
+### 2️⃣ Install Dependencies
+We recommend using a virtual environment:
+
+```
+conda create -n pix2pixpp python=3.9
+conda activate pix2pixpp
+pip install -r requirements.txt
+```
