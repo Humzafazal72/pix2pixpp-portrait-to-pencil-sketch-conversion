@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     checkpoint = torch.load(gen_weights_path,map_location=DEVICE)
     if gen_type == 'unet':
-        gen = unetGenerator().to(device=DEVICE)
+        gen = unetGenerator.to(device=DEVICE)
     else:
         gen = unetppGenerator.to(device = DEVICE)
 
